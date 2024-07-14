@@ -12,6 +12,7 @@ public class EmployeeServiceApplication {
 	public ModelMapper modelMapper(){
 		return new ModelMapper();
 	};
+	
 	public static void main(String[] args) {
 		SpringApplication.run(EmployeeServiceApplication.class, args);
 	}
