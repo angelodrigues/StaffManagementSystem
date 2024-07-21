@@ -1,9 +1,8 @@
 package com.angelo.employee_service.service.impl;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.angelo.employee_service.dto.APIResponseDto;
 import com.angelo.employee_service.dto.DepartmentDto;
@@ -22,7 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     private ModelMapper modelMapper;
 
-    private RestTemplate restTemplate;
+    private WebClient webClient;
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
@@ -37,9 +36,15 @@ public class EmployeeServiceImpl implements EmployeeService{
     public APIResponseDto getEmployeeById(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).get();
         
-        ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity("http://localhost:8080/api/departments/" + employee.getDepartmentCode(), DepartmentDto.class);
+        // ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity("http://localhost:8080/api/departments/" + employee.getDepartmentCode(), DepartmentDto.class);
 
-        DepartmentDto departmentDto = responseEntity.getBody();
+        // DepartmentDto departmentDto = responseEntity.getBody();
+
+        DepartmentDto departmentDto = webClient.get()
+                .uri("http://localhost:8080/api/departments/" + employee.getDepartmentCode())
+                .retrieve()
+                .bodyToMono(DepartmentDto.class)
+                .block();
 
         EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
 
