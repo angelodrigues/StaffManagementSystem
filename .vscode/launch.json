@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ServiceRegistryApplication",
+            "request": "launch",
+            "mainClass": "com.angelo.service_registry.ServiceRegistryApplication",
+            "projectName": "service-registry"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -16,6 +23,14 @@
             "request": "launch",
             "mainClass": "com.angelo.department_service.DepartmentServiceApplication",
             "projectName": "department-service"
+        },
+        {
+            "type": "java",
+            "name": "DepartmentServiceApplication (8082)",
+            "request": "launch",
+            "mainClass": "com.angelo.department_service.DepartmentServiceApplication",
+            "projectName": "department-service",
+            "args": "--server.port=8082"
         },
         {
             "type": "java",
